@@ -8,8 +8,6 @@ Projekt realizowany w ramach przedmiotu **Inżynieria Oprogramowania**.
 
 ## 📌 1. Opis i cel projektu
 
-## 📌 1. Opis i cel projektu
-
 W dobie transformacji energetycznej w motoryzacji wybór optymalnego źródła napędu (Benzyna, Diesel, LPG, Pełna Hybryda/HEV, Samochód Elektryczny/BEV) stał się złożonym problemem decyzyjnym. Standardowe dane katalogowe (WLTP) rzadko odzwierciedlają rzeczywiste wydatki, a zmienność cen paliw i taryf energii dodatkowo utrudnia oszacowanie długoterminowej opłacalności.
 
 **DriveOptima** to interaktywny kalkulator i silnik analityczny, który na podstawie:
@@ -71,8 +69,9 @@ $$\text{Koszt Miesięczny} = \frac{\text{TCO}(T)}{T \times 12}$$
 
 ## 🗄️ 4. Projekt bazy danych
 
-Projekt wykorzystuje relacyjną bazę danych SQLite z dwiema podstawowymi tabelami.
+Projekt wykorzystuje relacyjną bazę danych SQLite z dwiema podstawowymi tabelami:
 
+```text
 +-------------------------------------------------------------------+
 |                             vehicles                              |
 +-------------------------------------------------------------------+
@@ -89,9 +88,9 @@ Projekt wykorzystuje relacyjną bazę danych SQLite z dwiema podstawowymi tabela
 | annual_service_cost : INTEGER       -- szacowany roczny serwis    |
 | residual_rate_5y    : REAL          -- wskaźnik wartości po 5 l.  |
 +-------------------------------------------------------------------+
-|
-| fuel_type
-v
+                                  |
+                                  | fuel_type
+                                  v
 +-------------------------------------------------------------------+
 |                           fuel_prices                             |
 +-------------------------------------------------------------------+
@@ -100,6 +99,7 @@ v
 | unit_label          : VARCHAR(10)   -- 'zł/l' lub 'zł/kWh'        |
 | last_updated        : TIMESTAMP     -- data aktualizacji          |
 +-------------------------------------------------------------------+
+```
 
 ---
 
@@ -107,22 +107,24 @@ v
 
 System zaprojektowano w architekturze klient–serwer z separacją warstwy prezentacji, logiki biznesowej i danych:
 
+```text
 [ Frontend: React + Tailwind + Vite ]
-|
-REST API (JSON)
-v
+                 |
+             REST API (JSON)
+                 v
 [ Backend: Python + FastAPI + Pydantic ]
-|
-[ Silnik Obliczeniowy TCO ]
-|
-ORM (SQLAlchemy 2.0)
-v
-[ Baza Danych: SQLite ]
+                 |
+      [ Silnik Obliczeniowy TCO ]
+                 |
+       ORM (SQLAlchemy 2.0)
+                 v
+      [ Baza Danych: SQLite ]
+```
 
 * **Frontend:**
   * **React 18** (zbudowany przez **Vite**) – dynamiczny interfejs użytkownika.
   * **Tailwind CSS** – nowoczesny interfejs z responsywnymi suwakami i kartami.
-  * **Recharts** – wizualizacja trajektorii kosztów w czasie (wykresy liniowe i słupkowe).
+  * **Recharts** – wizualizacja trajektorii kosztów w czasie (wykresy słupkowe z rozbiciem kosztów).
 * **Backend:**
   * **Python 3.11+**
   * **FastAPI** – asynchroniczne, wydajne REST API z automatyczną dokumentacją OpenAPI (Swagger).
@@ -153,8 +155,10 @@ Przelicza TCO dla wszystkich pojazdów pasujących do kryteriów użytkownika i 
   },
   "years": 5
 }
-Przykładowa Odpowiedź (Response):
-JSON
+```
+
+#### Przykładowa Odpowiedź (Response):
+```json
 {
   "selected_criteria": {
     "body_type": "SUV",
@@ -192,15 +196,16 @@ JSON
     }
   ]
 }
+```
 
 ---
 
+## 📁 7. Wstępna struktura katalogów w repozytorium
 
-📁 7. Wstępna struktura katalogów w repozytorium
-
-Plaintext
+```text
 drive-optima/
 ├── README.md                  # Dokumentacja główna projektu
+├── LICENSE                    # Licencja MIT
 ├── .gitignore                 # Wykluczenia z systemu kontroli wersji
 ├── backend/                   # Warstwa serwerowa
 │   ├── app/
@@ -228,14 +233,13 @@ drive-optima/
         │   └── Chart.jsx      # Wykres skumulowanego kosztu (Recharts)
         ├── App.jsx            # Główny widok aplikacji
         └── main.jsx           # Punkt wejścia aplikacji React
+```
 
 ---
 
----
+## 📄 8. Licencja i Prawa Autorskie
 
-## 📄 9. Licencja i Prawa Autorskie
-
-Copyright (c) 2026 [Paweł Wolf]. Wszelkie prawa zastrzeżone.
+Copyright (c) 2026 Paweł Wolf. Wszelkie prawa zastrzeżone.
 
 Projekt udostępniany na warunkach licencji **MIT**. Szczegółowe informacje znajdują się w pliku [LICENSE](LICENSE).
 
