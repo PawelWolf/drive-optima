@@ -1,0 +1,29 @@
+@startuml
+start
+:Użytkownik otwiera formularz DriveOptima;
+:Wybiera budżet, przebieg roczny,\nhoryzont czasowy (T >= 5) i profil tras (%);
+
+if (Czy suma procentów tras == 100%?) then (Nie)
+  :Wyświetl komunikat błędu walidacji;
+  stop
+else (Tak)
+  :Wyślij żądanie POST /api/v1/calculate;
+endif
+
+:Pobierz z bazy SQL pojazdy SUV\nspełniające warunek (base_price <= budżet);
+:Pobierz aktualne ceny jednostkowe paliw/energii;
+
+while (Dla każdego dopasowanego pojazdu?) is (Tak)
+  :Oblicz średnie ważone spalanie (C_avg);
+  :Oblicz koszt paliwa w okresie T lat;
+  :Oblicz koszt serwisu w okresie T lat;
+  :Oblicz utratę wartości (Deprecjację);
+  :Zsumuj całkowite TCO(T);
+endwhile (Koniec listy)
+
+:Posortuj pojazdy rosnąco po wartości TCO(T);
+:Oznacz pojazd z 1. miejsca jako zwycięzcę;
+:Zwróć wynik JSON do interfejsu React;
+:Wyrenderuj kartę zwycięzcy i wykres słupkowy;
+stop
+@enduml

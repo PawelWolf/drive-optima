@@ -1,0 +1,40 @@
+@startuml
+class Vehicle {
+  +id : INTEGER <<PK>>
+  +body_type : VARCHAR(30)
+  +budget_bracket_max : INTEGER
+  +fuel_type : VARCHAR(20) <<FK>>
+  +model_example : VARCHAR(100)
+  +base_price : INTEGER
+  +cons_city : FLOAT
+  +cons_suburban : FLOAT
+  +cons_highway : FLOAT
+  +annual_service_cost : INTEGER
+  +residual_rate_5y : FLOAT
+}
+
+class FuelPrice {
+  +fuel_type : VARCHAR(20) <<PK>>
+  +price_per_unit : FLOAT
+  +unit_label : VARCHAR(10)
+}
+
+class CalculationRequest {
+  +body_type : String
+  +budget_bracket_max : Integer
+  +mileage_bracket : String
+  +pct_city : Float
+  +pct_suburban : Float
+  +pct_highway : Float
+  +years : Integer
+}
+
+class TCOEngine {
+  +calculate_vehicle_tco(vehicle, price, params) : Dict
+  +rank_vehicles(vehicles, prices, request) : List
+}
+
+Vehicle "N" --> "1" FuelPrice : korzysta z ceny >
+TCOEngine ..> Vehicle : przetwarza >
+TCOEngine ..> CalculationRequest : przyjmuje >
+@enduml

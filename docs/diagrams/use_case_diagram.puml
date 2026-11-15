@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+actor "Użytkownik (Kierowca)" as User
+actor "Administrator Danych" as Admin
+
+rectangle "System DriveOptima" {
+  usecase "Określenie budżetu zakupu" as UC1
+  usecase "Zdefiniowanie profilu tras\n(Miasto / Podmiejskie / Autostrada)" as UC2
+  usecase "Wybór rocznego przebiegu\ni horyzontu lat (>= 5)" as UC3
+  usecase "Generowanie rankingu TCO" as UC4
+  usecase "Analiza rozbicia kosztów\n(Deprecjacja, Paliwo, Serwis)" as UC5
+  usecase "Aktualizacja cen paliw\ni bazy pojazdów" as UC6
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+UC4 ..> UC5 : <<include>>
+Admin --> UC6
+@enduml
