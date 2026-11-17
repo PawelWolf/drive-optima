@@ -10,6 +10,9 @@ Base = declarative_base()
 
 
 def get_db():
+    """
+    Creating connection to the dataabase.
+    """
     db = SessionLocal()
     try:
         yield db
