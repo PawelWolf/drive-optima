@@ -27,16 +27,25 @@ app.add_middleware(
 
 @app.get("/")
 def health_check():
+     """
+    Function to check health of the service.
+    """
     return {"status": "ok", "service": "DriveOptima TCO Engine"}
 
 
 @app.get("/api/v1/fuels")
 def get_fuel_prices(db: Session = Depends(get_db)):
+    """
+    Function that is calling the api endpoint to get the fuel prices.
+    """
     return db.query(FuelPrice).all()
 
 
 @app.post("/api/v1/calculate", response_model=CalculationResponse)
 def calculate_tco(request: CalculationRequest, db: Session = Depends(get_db)):
+    """
+    Function that is calculating TCO.
+    """
     vehicles = (
         db.query(Vehicle)
         .filter(
